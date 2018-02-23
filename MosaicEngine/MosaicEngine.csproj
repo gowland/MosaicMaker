@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{28E834FA-E7F9-467E-B1A9-9C3EEF30B156}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MosaicEngine</RootNamespace>
+    <AssemblyName>MosaicEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FillFilterStragies\AverageDarkByRegionFillFilterStrategy.cs" />
+    <Compile Include="FillFilterStragies\AverageDarkFillFilterStrategy.cs" />
+    <Compile Include="FillFilterStragies\BaseImageComparerFilterStrategy.cs" />
+    <Compile Include="FillFilterStragies\RgbHistogramByRegionFillFilterStrategy.cs" />
+    <Compile Include="FillFilterStragies\RgbHistogramFillFilterStrategy.cs" />
+    <Compile Include="FillFilterStrategyFactory.cs" />
+    <Compile Include="IImageDataSorter.cs" />
+    <Compile Include="ImageDataSorter.cs" />
+    <Compile Include="ImageMatch.cs" />
+    <Compile Include="ImageMatchProvider.cs" />
+    <Compile Include="ImageMatchProviderFactory.cs" />
+    <Compile Include="ImageDataBuilder.cs" />
+    <Compile Include="MatchFilterStrategy.cs" />
+    <Compile Include="MatchFilterStrategies\BestMatchPerMatchFilterStrategy.cs" />
+    <Compile Include="MatchFilterStrategies\MaxDifferenceMatchFilterStrategy.cs" />
+    <Compile Include="MatchingStrategies\ImageDataMatchingStrategy.cs" />
+    <Compile Include="MatchStatistics\MatchStatisticBuilder.cs" />
+    <Compile Include="MatchStatistics\MatchStatistics.cs" />
+    <Compile Include="MosaicBuilder.cs" />
+    <Compile Include="MosaicBuilderFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReconstructedImageBuilder.cs" />
+    <Compile Include="RecursiveDirectoryFillProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageProcessing\ImageProcessing.csproj">
+      <Project>{E5D31E2C-355E-4627-BD1B-475640E40ED5}</Project>
+      <Name>ImageProcessing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MatcherCore\MatcherCore.csproj">
+      <Project>{721578D3-F798-4C00-A0C9-2FA6DDA6F053}</Project>
+      <Name>MatcherCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MatcherEngine\MatcherEngine.csproj">
+      <Project>{7D3582E3-0D75-4F40-A308-28502E3F6F64}</Project>
+      <Name>MatcherEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnsafeImageLibrary\UnsafeImageLibrary.csproj">
+      <Project>{9A08041C-71B0-4A93-9CF9-9B6E7FBCB49F}</Project>
+      <Name>UnsafeImageLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

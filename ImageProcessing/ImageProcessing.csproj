@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5D31E2C-355E-4627-BD1B-475640E40ED5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImageProcessing</RootNamespace>
+    <AssemblyName>ImageProcessing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BitmapExtensions.cs" />
+    <Compile Include="Comparison\AverageDarkByRegionComparer.cs" />
+    <Compile Include="Comparison\AverageGreyComparer.cs" />
+    <Compile Include="Comparison\HistogramByRegionComparer.cs" />
+    <Compile Include="Comparison\HistogramComparer.cs" />
+    <Compile Include="Comparison\TotalImageDifferenceComparer.cs" />
+    <Compile Include="ConvlutionFilter\ConvolutionFilterResultGenerator.cs" />
+    <Compile Include="ConvlutionFilter\ConvolutionFilterMatrix.cs" />
+    <Compile Include="Histogram\Histogram.cs" />
+    <Compile Include="Histogram\IntBucket.cs" />
+    <Compile Include="Histogram\RGBHistogram.cs" />
+    <Compile Include="IImageData.cs" />
+    <Compile Include="ImageCalculations\AverageGreyByRegionCalculator.cs" />
+    <Compile Include="ImageCalculations\AverageGreyCalculator.cs" />
+    <Compile Include="ImageCalculations\HistogramByRegionCalculator.cs" />
+    <Compile Include="ImageCalculations\HistogramCalculator.cs" />
+    <Compile Include="ImageCalculations\StatByRegionCalculator.cs" />
+    <Compile Include="ImageChunk.cs" />
+    <Compile Include="ImageData.cs" />
+    <Compile Include="ImageLoaders\FlyWeightImageLoader.cs" />
+    <Compile Include="ImageLoaders\IncrediblyInefficientImageLoader.cs" />
+    <Compile Include="ImageRegion.cs" />
+    <Compile Include="ImageRegionCreationStrategies\FixedSizeRegionCreationStrategy.cs" />
+    <Compile Include="ImageStats.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonUtilities\CommonUtilities.csproj">
+      <Project>{B13EE9EA-30E4-4115-9D05-6E74AD457ADA}</Project>
+      <Name>CommonUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DesignPatterns\DesignPatterns.csproj">
+      <Project>{6E17623C-C8FA-404C-B301-C3702CCA97F7}</Project>
+      <Name>DesignPatterns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnsafeImageLibrary\UnsafeImageLibrary.csproj">
+      <Project>{9A08041C-71B0-4A93-9CF9-9B6E7FBCB49F}</Project>
+      <Name>UnsafeImageLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

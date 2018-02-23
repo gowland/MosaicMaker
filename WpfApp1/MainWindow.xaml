@@ -1,0 +1,41 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+          <Grid.RowDefinitions>
+              <RowDefinition Height="*"/>
+              <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Image x:Name="originalImage"/> 
+          <Button x:Name="loadButton" Click="LoadButton_OnClick" Grid.Row="1" Content="Load"/>
+        </Grid>
+        <Grid Grid.Column="1">
+          <ListBox x:Name="filterResultList">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:FilterResult}">
+                  <Border BorderBrush="Red" BorderThickness="2">
+                      <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Filter}"/>
+                        <TextBlock Text="{Binding Total}"/>
+                        <TextBlock Text="{Binding NormalizedTotal}"/>
+                        <Viewbox Width="200" Height="300">
+                          <Image Source="{Binding ResultBitmap}" /> 
+                        </Viewbox>
+                      </StackPanel>
+                  </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+    </Grid>
+</Window>
