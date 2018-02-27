@@ -42,7 +42,8 @@ namespace ImageProcessing.ImageCalculations
                 {
                     for (int yOffset = 0; yOffset < pixels.Height; yOffset++)
                     {
-                        Color color = pixels.GetPixel(pixels.X + xOffset, pixels.Y + yOffset);
+//                        Color color = pixels.GetPixel(pixels.X + xOffset, pixels.Y + yOffset);
+                        Color color = pixels.GetPixel(xOffset, yOffset);
 
                         totalGrey += color.R + color.G + color.B;
                     }
