@@ -283,14 +283,8 @@ namespace UnsafeImageLibrary
                 throw new InvalidOperationException("The FastBitmap must be locked before any pixel operations are made");
             }
 
-            if (x < 0 || x >= _width)
-            {
-                throw new ArgumentOutOfRangeException("The X component must be >= 0 and < width");
-            }
-            if (y < 0 || y >= _height)
-            {
-                throw new ArgumentOutOfRangeException("The Y component must be >= 0 and < height");
-            }
+            EnsureX(x);
+            EnsureY(y);
 
             *(uint*)(_scan0 + x + y * _strideWidth) = color;
         }
@@ -323,16 +317,30 @@ namespace UnsafeImageLibrary
                 throw new InvalidOperationException("The FastBitmap must be locked before any pixel operations are made");
             }
 
-            if (x < 0 || x >= _width)
-            {
-                throw new ArgumentOutOfRangeException("The X component must be >= 0 and < width");
-            }
-            if (y < 0 || y >= _height)
-            {
-                throw new ArgumentOutOfRangeException("The Y component must be >= 0 and < height");
-            }
+            EnsureX(x);
+            EnsureY(y);
 
             return *(_scan0 + x + y * _strideWidth);
+        }
+
+        private void EnsureX(int x)
+        {
+            if (x < 0 || x >= _width)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(x),
+                    $"x ({x}) component must be >= 0 and < width ({_width})");
+            }
+        }
+
+        private void EnsureY(int y)
+        {
+            if (y < 0 || y >= _height)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(y),
+                    $"y ({y}) component must be >= 0 and < height ({_height})");
+            }
         }
 
         /// <summary>
@@ -350,14 +358,8 @@ namespace UnsafeImageLibrary
                 throw new InvalidOperationException("The FastBitmap must be locked before any pixel operations are made");
             }
 
-            if (x < 0 || x >= _width)
-            {
-                throw new ArgumentOutOfRangeException("The X component must be >= 0 and < width");
-            }
-            if (y < 0 || y >= _height)
-            {
-                throw new ArgumentOutOfRangeException("The Y component must be >= 0 and < height");
-            }
+            EnsureX(x);
+            EnsureY(y);
 
             return *((uint*)_scan0 + x + y * _strideWidth);
         }
