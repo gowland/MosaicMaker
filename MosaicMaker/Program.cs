@@ -17,7 +17,10 @@ namespace MosaicMaker
             var  mosaicBuilderFactory = new MosaicBuilderFactory(45, 30, 15, 10, 5, 5);
             MosaicBuilder mosaicBuilder = mosaicBuilderFactory.GetMosaicBuilder();
             // TODO (rgowland): Use args from create arguments
-            mosaicBuilder.CreateMosaic(@"D:\mosaic\rob.jpg", @"D:\mosaic\Alphabet\", @"D:\mosaic\rob_mosaic.jpg");
+            mosaicBuilder.CreateMosaic(
+                @"C:\Users\53rgowland\Downloads\cropped_rounded.jpg",
+                @"C:\Users\53rgowland\Documents\Alphabet\",
+                @"C:\Users\53rgowland\Downloads\cropped_mosaic.jpg");
             s.Stop();
             Console.WriteLine("Ellapsed minutes: {0}", TimeSpan.FromMilliseconds(s.ElapsedMilliseconds).TotalMinutes);
             Console.ReadLine();
