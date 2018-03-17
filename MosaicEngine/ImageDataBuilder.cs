@@ -21,6 +21,7 @@ namespace MosaicEngine
         private readonly AverageGreyCalculator _averageGreyCalculator = new AverageGreyCalculator();
         private readonly AverageGreyByRegionCalculator _averageGreyByRegionCalculator;
         private readonly HistogramCalculator _histogramCalculator = new HistogramCalculator();
+        private readonly ConvolutionInfoCalculator _convolutionInfoCalculator = new ConvolutionInfoCalculator();
 
         public ImageDataBuilder(string imagePath, IRegionCreationStrategy regionCreationStrategy, IRegionCreationStrategy subRegionCreationStrategy, IImageLoader imageLoader)
         {
@@ -52,7 +53,8 @@ namespace MosaicEngine
             return new ImageStats(
                     _averageGreyCalculator.CaluclateAverageDark(imageChunk),
                     _averageGreyByRegionCalculator.GetStatByRegion(imageChunk),
-                    _histogramCalculator.CaluclateHistogram(imageChunk));
+                    _histogramCalculator.CaluclateHistogram(imageChunk),
+                    _convolutionInfoCalculator.CalculateConvolutionInfo(imageChunk));
         }
     }
 }

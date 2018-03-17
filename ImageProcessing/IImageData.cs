@@ -14,5 +14,7 @@ namespace ImageProcessing
         int AverageGrey { get; }
         IDictionary<Point, int> AverageGreyByRegion { get; }
         RgbHistogram Histogram { get; }
+        int IndexOfBestMatch { get; }
+        int ScoreOfBestMatch { get; }
     }
 }

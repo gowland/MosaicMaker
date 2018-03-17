@@ -54,6 +54,8 @@
     <Compile Include="IImageData.cs" />
     <Compile Include="ImageCalculations\AverageGreyByRegionCalculator.cs" />
     <Compile Include="ImageCalculations\AverageGreyCalculator.cs" />
+    <Compile Include="ImageCalculations\ConvolutionInfo.cs" />
+    <Compile Include="ImageCalculations\ConvolutionInfoCalculator.cs" />
     <Compile Include="ImageCalculations\HistogramByRegionCalculator.cs" />
     <Compile Include="ImageCalculations\HistogramCalculator.cs" />
     <Compile Include="ImageCalculations\StatByRegionCalculator.cs" />

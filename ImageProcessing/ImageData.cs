@@ -48,5 +48,7 @@ namespace ImageProcessing
         public int AverageGrey { get { return Stats.AverageGrey; } }
         public IDictionary<Point, int> AverageGreyByRegion { get { return Stats.AverageGreyByRegion; } }
         public RgbHistogram Histogram { get { return Stats.Histogram; } }
+        public int IndexOfBestMatch => Stats.ConvolutionInfo.IndexOfBestFilter;
+        public int ScoreOfBestMatch => Stats.ConvolutionInfo.ScoreOfBestFilter;
     }
 }

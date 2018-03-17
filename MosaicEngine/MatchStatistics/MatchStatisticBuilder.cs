@@ -33,8 +33,17 @@ namespace MosaicEngine.MatchStatistics
                     _averageGreyComparer.Compare(match.Source, match.Fill),
                     _averageDarkByRegionComparer.Compare(match.Source, match.Fill),
                     _histogramComparer.Compare(match.Source, match.Fill),
-                    match.Score
-                ));
+                    FilterIndexIsEquivalent(match.Source.IndexOfBestMatch, match.Fill.IndexOfBestMatch),
+                    match.Source.IndexOfBestMatch == match.Fill.IndexOfBestMatch 
+                        ? (int?)Math.Abs(match.Source.ScoreOfBestMatch - match.Fill.ScoreOfBestMatch) 
+                        : null,
+                    match.Score));
+        }
+
+        private bool FilterIndexIsEquivalent(int a, int b)
+        {
+            return ((a == 0 || a == 1) && (b == 0 || b == 1))
+                   || ((a == 2 || a == 3) && (b == 2 || b == 3));
         }
 
         private void WriteSummary(IEnumerable<MatchStatistics> statistics)
@@ -54,6 +63,13 @@ namespace MosaicEngine.MatchStatistics
             Console.WriteLine("Max histogram difference {0}", statisticsList.Select(stat => stat.HistogramComparison).Max());
             Console.WriteLine("Average histogram difference {0}", statisticsList.Select(stat => stat.HistogramComparison).Average());
             Console.WriteLine("StdDev histogram difference {0}", StdDev(statisticsList.Select(stat => stat.HistogramComparison)));
+
+            Console.WriteLine("% same filter {0}", statisticsList.Select(stat => stat.IsBestMatchSame ? 1.0 : 0.0).Average());
+
+            Console.WriteLine("Min filter difference {0}", statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value).Min());
+            Console.WriteLine("Max filter difference {0}", statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value).Max());
+            Console.WriteLine("Average filter difference {0}", statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value).Average());
+            Console.WriteLine("StdDev filter difference {0}", StdDev(statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value)));
 
             Console.WriteLine("Min match score {0}", statisticsList.Select(stat => stat.MatchScore).Min());
             Console.WriteLine("Max match score {0}", statisticsList.Select(stat => stat.MatchScore).Max());

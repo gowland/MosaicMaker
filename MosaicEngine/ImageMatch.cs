@@ -17,9 +17,9 @@ namespace MosaicEngine
             Score = score;
         }
 
-        public IImageData Source { get; private set; }
-        public IImageData Fill { get; private set; }
-        public int Score { get; private set; }
-        public Point SourceOrigin { get { return Source.Origin; } }
+        public IImageData Source { get; }
+        public IImageData Fill { get; }
+        public int Score { get; }
+        public Point SourceOrigin => Source.Origin;
     }
 }

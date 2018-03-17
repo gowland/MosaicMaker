@@ -151,6 +151,7 @@ namespace MosaicEngine
 
 
                 IEnumerable<ImageData> indexImageDatas;
+                // TODO: temporarily removed until the index classes stablize
                 if (TryGetIndexedResults(path, out indexImageDatas))
                 {
                     foreach (var indexImageData in indexImageDatas)
