@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MosaicEngine;
+using MosaicEngine.MatchFilterStrategies;
 
 namespace MosaicMaker
 {
@@ -14,13 +15,15 @@ namespace MosaicMaker
         {
             var s = new Stopwatch();
             s.Start();
-            var  mosaicBuilderFactory = new MosaicBuilderFactory(45, 30, 15, 10, 5, 5);
+            var bestMatchFilter = new BestMatchPerMatchFilterStrategy();
+            var  mosaicBuilderFactory = new MosaicBuilderFactory(45, 30, 15, 10, 5, 5, bestMatchFilter);
             MosaicBuilder mosaicBuilder = mosaicBuilderFactory.GetMosaicBuilder();
             // TODO (rgowland): Use args from create arguments
             mosaicBuilder.CreateMosaic(
-                @"C:\Users\53rgowland\Downloads\cropped_rounded.jpg",
+                @"C:\Users\53rgowland\Downloads\rob_face.jpg",
                 @"C:\Users\53rgowland\Documents\Alphabet\",
-                @"C:\Users\53rgowland\Downloads\cropped_mosaic.jpg");
+                @"C:\Users\53rgowland\Downloads\rob_face_mosaic.jpg",
+                bestMatchFilter);
             s.Stop();
             Console.WriteLine("Ellapsed minutes: {0}", TimeSpan.FromMilliseconds(s.ElapsedMilliseconds).TotalMinutes);
             Console.ReadLine();

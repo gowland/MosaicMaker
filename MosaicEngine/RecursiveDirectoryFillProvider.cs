@@ -150,8 +150,9 @@ namespace MosaicEngine
                 }
 
 
-                IEnumerable<ImageData> indexImageDatas;
                 // TODO: temporarily removed until the index classes stablize
+/*
+                IEnumerable<ImageData> indexImageDatas;
                 if (TryGetIndexedResults(path, out indexImageDatas))
                 {
                     foreach (var indexImageData in indexImageDatas)
@@ -160,6 +161,7 @@ namespace MosaicEngine
                     }
                 }
                 else
+*/
                 {
                     string[] files = null;
                     try

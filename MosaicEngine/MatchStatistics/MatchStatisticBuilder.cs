@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageProcessing.Comparison;
 using ImageProcessing.ImageLoaders;
+using MosaicEngine.MatchFilterStrategies;
 
 namespace MosaicEngine.MatchStatistics
 {
@@ -22,9 +23,9 @@ namespace MosaicEngine.MatchStatistics
             _imageLoader = imageLoader;
         }
 
-        public void WriteStatistics(IEnumerable<ImageMatch> matches)
+        public void WriteStatistics(IEnumerable<ImageMatch> matches, BestMatchPerMatchFilterStrategy bestMatchFilter)
         {
-            WriteSummary(GetMatchStatistics(matches));
+            WriteSummary(GetMatchStatistics(matches), bestMatchFilter);
         }
 
         private IEnumerable<MatchStatistics> GetMatchStatistics(IEnumerable<ImageMatch> matches)
@@ -33,10 +34,7 @@ namespace MosaicEngine.MatchStatistics
                     _averageGreyComparer.Compare(match.Source, match.Fill),
                     _averageDarkByRegionComparer.Compare(match.Source, match.Fill),
                     _histogramComparer.Compare(match.Source, match.Fill),
-                    FilterIndexIsEquivalent(match.Source.IndexOfBestMatch, match.Fill.IndexOfBestMatch),
-                    match.Source.IndexOfBestMatch == match.Fill.IndexOfBestMatch 
-                        ? (int?)Math.Abs(match.Source.ScoreOfBestMatch - match.Fill.ScoreOfBestMatch) 
-                        : null,
+                    match.Source.ConvolutionInfo.Scores.Zip(match.Fill.ConvolutionInfo.Scores, (a,b)=>Math.Abs(a-b)).Sum(),
                     match.Score));
         }
 
@@ -46,7 +44,7 @@ namespace MosaicEngine.MatchStatistics
                    || ((a == 2 || a == 3) && (b == 2 || b == 3));
         }
 
-        private void WriteSummary(IEnumerable<MatchStatistics> statistics)
+        private void WriteSummary(IEnumerable<MatchStatistics> statistics, BestMatchPerMatchFilterStrategy bestMatchFilter)
         {
             IList<MatchStatistics> statisticsList = statistics.ToList();
             Console.WriteLine("Min average dark {0}", statisticsList.Select(stat => stat.AverageDarkComparison).Min());
@@ -64,12 +62,25 @@ namespace MosaicEngine.MatchStatistics
             Console.WriteLine("Average histogram difference {0}", statisticsList.Select(stat => stat.HistogramComparison).Average());
             Console.WriteLine("StdDev histogram difference {0}", StdDev(statisticsList.Select(stat => stat.HistogramComparison)));
 
-            Console.WriteLine("% same filter {0}", statisticsList.Select(stat => stat.IsBestMatchSame ? 1.0 : 0.0).Average());
 
-            Console.WriteLine("Min filter difference {0}", statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value).Min());
-            Console.WriteLine("Max filter difference {0}", statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value).Max());
-            Console.WriteLine("Average filter difference {0}", statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value).Average());
-            Console.WriteLine("StdDev filter difference {0}", StdDev(statisticsList.Where(stat => stat.BestFilterComparison.HasValue).Select(stat => stat.BestFilterComparison.Value)));
+/*
+            Console.WriteLine("Min filter difference {0}", statisticsList.Select(stat => stat.FilterComparison).Min());
+            Console.WriteLine("Max filter difference {0}", statisticsList.Select(stat => stat.FilterComparison).Max());
+            Console.WriteLine("Average filter difference {0}", statisticsList.Select(stat => stat.FilterComparison).Average());
+            Console.WriteLine("StdDev filter difference {0}", StdDev(statisticsList.Select(stat => stat.FilterComparison)));
+*/
+
+            var convolutionEfficacies = bestMatchFilter.BestMatchEfficacies.ToList();
+            Console.WriteLine("Min filter difference {0}", convolutionEfficacies.Min());
+            Console.WriteLine("Max filter difference {0}", convolutionEfficacies.Max());
+            Console.WriteLine("Average filter difference {0}", convolutionEfficacies.Average());
+            Console.WriteLine("StdDev filter difference {0}", StdDev(convolutionEfficacies));
+
+            var matchCounts = bestMatchFilter.TotalMatches.ToList();
+            Console.WriteLine("Min filter difference {0}", matchCounts.Min());
+            Console.WriteLine("Max filter difference {0}", matchCounts.Max());
+            Console.WriteLine("Average filter difference {0}", matchCounts.Average());
+            Console.WriteLine("StdDev filter difference {0}", StdDev(matchCounts));
 
             Console.WriteLine("Min match score {0}", statisticsList.Select(stat => stat.MatchScore).Min());
             Console.WriteLine("Max match score {0}", statisticsList.Select(stat => stat.MatchScore).Max());

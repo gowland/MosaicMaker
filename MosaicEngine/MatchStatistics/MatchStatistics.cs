@@ -10,21 +10,19 @@ namespace MosaicEngine.MatchStatistics
 {
     public class MatchStatistics
     {
-        public MatchStatistics(int averageDarkComparison, int averageDarkByRegionComparison, int histogramComparison, bool isBestMatchSame, int? bestFilterComparison, int matchScore)
+        public MatchStatistics(int averageDarkComparison, int averageDarkByRegionComparison, int histogramComparison, int filterComparison, int matchScore)
         {
             AverageDarkComparison = averageDarkComparison;
             AverageDarkByRegionComparison = averageDarkByRegionComparison;
             HistogramComparison = histogramComparison;
             MatchScore = matchScore;
-            IsBestMatchSame = isBestMatchSame;
-            BestFilterComparison = bestFilterComparison;
+            FilterComparison = filterComparison;
         }
 
         public int AverageDarkComparison { get; }
         public int AverageDarkByRegionComparison { get; }
         public int HistogramComparison { get; }
-        public bool IsBestMatchSame { get; }
-        public int? BestFilterComparison { get; }
+        public int FilterComparison { get; }
         public int MatchScore { get; }
     }
 }

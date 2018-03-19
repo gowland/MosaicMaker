@@ -10,6 +10,7 @@ using ImageProcessing;
 using ImageProcessing.ImageLoaders;
 using ImageProcessing.ImageRegionCreationStrategies;
 using MatcherEngine;
+using MosaicEngine.MatchFilterStrategies;
 using MosaicEngine.MatchStatistics;
 
 namespace MosaicEngine
@@ -40,7 +41,7 @@ namespace MosaicEngine
             _imageDataSorter = imageDataSorter;
         }
 
-        public void CreateMosaic(string source, string fillDirectory, string output, string indexFile = null)
+        public void CreateMosaic(string source, string fillDirectory, string output, BestMatchPerMatchFilterStrategy bestMatchFilter, string indexFile = null)
         {
             var sourceBitmap = (Bitmap)Image.FromFile(source);
 
@@ -66,7 +67,7 @@ namespace MosaicEngine
 
             // Build stats
             var statsBuilder = new MatchStatisticBuilder(_imageLoader);
-            statsBuilder.WriteStatistics(matches);
+            statsBuilder.WriteStatistics(matches, bestMatchFilter);
         }
     }
 }

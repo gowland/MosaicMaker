@@ -17,6 +17,7 @@ namespace ImageProcessing.ImageCalculations
 
         public ConvolutionInfo CalculateConvolutionInfo(ImageChunk chunk)
         {
+/*
             var bestMatch = _filters.Select((v, i) =>
                     new {Index = i, FilterAccumulator = ConvolutionFilterResultGenerator.ApplyFilter(chunk, v)})
                 .Select(result => new
@@ -27,8 +28,9 @@ namespace ImageProcessing.ImageCalculations
                 })
                 .OrderByDescending(result => result.Score)
                 .First();
+*/
 
-            return new ConvolutionInfo(bestMatch.Index, bestMatch.Score);
+            return new ConvolutionInfo(_filters.Select(filter => ConvolutionFilterResultGenerator.ApplyFilter(chunk, filter).Flatten().Select(v => v < 0 ? 0 : (v > 255 ? 255 : 0)).Sum()).ToArray());
         }
     }
 }

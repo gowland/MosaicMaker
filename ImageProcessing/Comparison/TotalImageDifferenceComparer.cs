@@ -9,9 +9,9 @@ using UnsafeImageLibrary;
 
 namespace ImageProcessing.Comparison
 {
-    public interface IImageComparer
+    public interface IImageComparer : IComparer<IImageData>
     {
-        int Compare(IImageData a, IImageData b);
+//        int Compare(IImageData a, IImageData b);
     }
 
     public class TotalImageDifferenceComparer : IImageComparer

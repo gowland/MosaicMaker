@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ImageProcessing.ImageCalculations
 {
     [Serializable]
     public class ConvolutionInfo
     {
-        public ConvolutionInfo(int index, int score)
+        public ICollection<int> Scores { get; }
+
+        public ConvolutionInfo(ICollection<int> scores)
         {
-            IndexOfBestFilter = index;
-            ScoreOfBestFilter = score;
+            Scores = scores;
         }
 
-        public int IndexOfBestFilter { get; }
-        public int ScoreOfBestFilter { get; }
+        public int Difference(ConvolutionInfo other)
+        {
+            return Scores.Zip(other.Scores, (a,b)=>Math.Abs(a - b)).Sum();
+        }
     }
 }

@@ -15,11 +15,13 @@ namespace MosaicEngine
             Source = source;
             Fill = fill;
             Score = score;
+            ConvolutionDifference = Source.ConvolutionInfo.Difference(Fill.ConvolutionInfo);
         }
 
         public IImageData Source { get; }
         public IImageData Fill { get; }
         public int Score { get; }
         public Point SourceOrigin => Source.Origin;
+        public int ConvolutionDifference { get; }
     }
 }

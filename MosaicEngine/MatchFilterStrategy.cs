@@ -10,11 +10,12 @@ namespace MosaicEngine
 {
     public class MatchFilterStrategy : CompositeFilterStrategy<ImageMatch>
     {
-        public MatchFilterStrategy()
+        public MatchFilterStrategy(BestMatchPerMatchFilterStrategy bestMatchPerMatchFilter)
             : base(new IFilterStrategy<ImageMatch>[]
             {
+                // TODO: Filter by convolution distance
                 new MaxDifferenceMatchFilterStrategy(1000000),
-                new BestMatchPerMatchFilterStrategy()
+                bestMatchPerMatchFilter
             })
         {
 

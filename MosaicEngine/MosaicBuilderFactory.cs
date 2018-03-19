@@ -9,6 +9,7 @@ using ImageProcessing.ImageLoaders;
 using ImageProcessing.ImageRegionCreationStrategies;
 using MatcherCore;
 using MatcherEngine;
+using MosaicEngine.MatchFilterStrategies;
 using MosaicEngine.MatchingStrategies;
 
 namespace MosaicEngine
@@ -22,14 +23,14 @@ namespace MosaicEngine
         private readonly IImageLoader _imageLoader;
         private readonly ImageDataSorter<int> _imageDataSorter = new ImageDataSorter<int>(imageData => imageData.AverageGrey);
 
-        public MosaicBuilderFactory(int holeWidth, int holeHeight, int averageDarkWidth, int averageDarkHeight, int fillHorizontalStep, int fillVerticalStep)
+        public MosaicBuilderFactory(int holeWidth, int holeHeight, int averageDarkWidth, int averageDarkHeight, int fillHorizontalStep, int fillVerticalStep, BestMatchPerMatchFilterStrategy bestMatchFilter )
         {
-            _imageLoader = new FlyWeightImageLoader(1000);
+            _imageLoader = new FlyWeightImageLoader(2000);
             _sourceRegionCreationStrategy = new NonOverlappingRegionCreationStrategy(holeWidth, holeHeight);            
             _averageDarkRegionCreationStrategy = new NonOverlappingRegionCreationStrategy(averageDarkWidth, averageDarkHeight);
             _fillRegionCreationStrategy = new FixedSizeRegionCreationStrategy(holeWidth, holeHeight, fillHorizontalStep, fillVerticalStep);
             IImageComparer imageComparer = new TotalImageDifferenceComparer(_imageLoader);
-            IFilterStrategy<ImageMatch> matchFilterMatchStrategy = new MatchFilterStrategy();
+            IFilterStrategy<ImageMatch> matchFilterMatchStrategy = new MatchFilterStrategy(bestMatchFilter);
             _imageMatchProviderFactory = new ImageMatchProviderFactory(
                 new ImageDataMatchingStrategy(imageComparer), 
                 new FillFilterStrategyFactory(), 
